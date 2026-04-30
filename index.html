@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARRIT | Artifacts</title>
+    <style>
+        /* Глобальные настройки темы: Уголь и Серебро, Каменная текстура */
+        body {
+            /* Ссылка на текстуру камня, которую мы загрузим на Netlify */
+            background-image: url('stone_texture.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-color: #000000; /* Резервный цвет */
+            
+            color: #E5E5E5;
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 80px 20px 40px;
+            text-align: center;
+        }
+
+        /* Заменяем текстовый заголовок на логотип */
+        .logo-scratched {
+            /* Ссылка на логотип, который мы загрузим на Netlify */
+            background-image: url('logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 250px; /* Размер логотипа */
+            height: 250px; /* Соответствует высоте картинки */
+            margin: 0 auto;
+            /* Чтобы убрать текст 'ARRIT', если он был */
+            text-indent: -9999px; 
+            overflow: hidden;
+            display: block;
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            color: #777;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.3rem;
+        }
+
+        /* Контейнер коллекций */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            box-sizing: border-box;
+            flex-grow: 1;
+        }
+
+        /* Карточка коллекции */
+        .collection {
+            border: 1px solid #333;
+            margin-bottom: 30px;
+            padding: 40px;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            position: relative;
+            background: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный фон для читаемости */
+            backdrop-filter: blur(2px); /* Легкое размытие камня */
+        }
+
+        /* Акцент темного дерева при наведении */
+        .collection:hover {
+            border-color: #4A3728;
+            background: rgba(74, 55, 40, 0.1);
+        }
+
+        .collection h2 {
+            font-size: 1.6rem;
+            margin: 0;
+            letter-spacing: 0.4rem;
+            text-transform: uppercase;
+            font-weight: 400;
+            color: #fff;
+        }
+
+        .collection p {
+            font-size: 0.8rem;
+            color: #555;
+            margin: 10px 0 0;
+            text-transform: lowercase;
+            font-style: italic;
+        }
+
+        /* Выпадающий список моделей */
+        .models {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+        }
+
+        .models.active {
+            max-height: 500px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+
+        .model-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .model-list li {
+            padding: 10px 0;
+            font-size: 1.2rem;
+            color: #999;
+            letter-spacing: 0.1rem;
+            text-transform: capitalize;
+            transition: color 0.3s;
+        }
+
+        .model-list li:hover {
+            color: #E5E5E5;
+        }
+
+        .model-list li::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 1px;
+            background: #4A3728;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+
+        footer {
+            padding: 60px 20px;
+            font-size: 0.7rem;
+            color: #444;
+            letter-spacing: 0.2rem;
+            text-align: center;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.6);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Адаптивность для мобильных */
+        @media (max-width: 600px) {
+            .logo-scratched { width: 180px; height: 180px; }
+            .collection { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Вместо h1 text, используем div с фоном-логотипом -->
+        <div class="logo-scratched">ARRIT</div>
+        <div class="tagline">Silver. Fire. Soot.</div>
+    </header>
+
+    <div class="container">
+        
+        <!-- PRIMUS -->
+        <div class="collection" onclick="toggle('primus')">
+            <h2>PRIMUS</h2>
+            <p>нажми, чтобы открыть артефакты</p>
+            <div id="primus" class="models">
+                <ul class="model-list">
+                    <li>Axus</li>
+                    <li>Lepus</li>
+                    <li>Homus</li>
+                    <li>Noctis</li>
+                    <li>Corvus</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- UDU -->
+        <div class="collection" onclick="toggle('udu')">
+            <h2>UDU</h2>
+            <p>нажми, чтобы открыть артефакты</p>
+            <div id="udu" class="models">
+                <ul class="model-list">
+                    <li>Nammu</li>
+                    <li>Ullikummi</li>
+                    <li>Gigelmkhul</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- NOVA -->
+        <div class="collection" onclick="toggle('nova')">
+            <h2>NOVA</h2>
+            <p>в разработке</p>
+            <div id="nova" class="models">
+                <ul class="model-list">
+                    <li>Artifact I</li>
+                    <li>Artifact II</li>
+                    <li>Artifact III</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 ARRIT ARTIFACTS / TBILISI / HANDMADE
+    </footer>
+
+    <script>
+        function toggle(id) {
+            const el = document.getElementById(id);
+            const allModels = document.querySelectorAll('.models');
+            
+            // Закрываем другие, если нужно
+            // allModels.forEach(m => { if(m.id !== id) m.classList.remove('active'); });
+
+            el.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
