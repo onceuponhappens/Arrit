@@ -1,233 +1,695 @@
 <!DOCTYPE html>
+
 <html lang="ru">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>ARRIT | Artifacts</title>
+
     <style>
-        /* Глобальные настройки темы: Уголь и Серебро, Каменная текстура */
+
+        /* Минималистичный темный стиль */
+
         body {
-            /* Ссылка на текстуру камня, которую мы загрузим на Netlify */
-            background-image: url('stone_texture.jpg');
+
+            /* Измененный фон */
+
+            background-image: url('https://i.ibb.co/wh7FPRGD/background-20260430055650-edit-208179019073293.jpg');
+
             background-size: cover;
-            background-attachment: fixed;
+
             background-position: center;
-            background-color: #000000; /* Резервный цвет */
+
+            background-attachment: fixed;
+
+            background-repeat: no-repeat;
+
+            background-color: #0a0a0a; /* Запасной цвет */
+
             
+
             color: #E5E5E5;
+
             font-family: 'Georgia', serif;
+
             margin: 0;
+
             padding: 0;
-            line-height: 1.6;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             min-height: 100vh;
+
         }
+
+
 
         header {
-            padding: 80px 20px 40px;
+
+            padding: 80px 20px 40px 20px;
+
             text-align: center;
+
         }
 
-        /* Заменяем текстовый заголовок на логотип */
-        .logo-scratched {
-            /* Ссылка на логотип, который мы загрузим на Netlify */
-            background-image: url('logo.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            width: 250px; /* Размер логотипа */
-            height: 250px; /* Соответствует высоте картинки */
-            margin: 0 auto;
-            /* Чтобы убрать текст 'ARRIT', если он был */
-            text-indent: -9999px; 
-            overflow: hidden;
-            display: block;
+
+
+        h1 {
+
+            font-size: 2.5rem;
+
+            letter-spacing: 0.8rem;
+
+            margin: 0;
+
+            font-weight: 300;
+
+            color: #fff;
+
+            text-transform: uppercase;
+
         }
+
+
 
         .tagline {
-            font-size: 0.75rem;
-            color: #777;
-            margin-top: 10px;
+
+            font-size: 0.7rem;
+
+            color: #444;
+
+            margin-top: 15px;
+
             text-transform: uppercase;
-            letter-spacing: 0.3rem;
+
+            letter-spacing: 0.4rem;
+
         }
 
-        /* Контейнер коллекций */
-        .container {
-            width: 100%;
-            max-width: 800px;
-            padding: 20px;
-            box-sizing: border-box;
-            flex-grow: 1;
+
+
+        .logo-container {
+
+            margin-top: 50px;
+
+            margin-bottom: 20px;
+
         }
 
-        /* Карточка коллекции */
-        .collection {
-            border: 1px solid #333;
-            margin-bottom: 30px;
-            padding: 40px;
-            transition: all 0.5s ease;
+
+
+        .main-logo {
+
+            width: 180px;
+
+            height: auto;
+
+            filter: grayscale(100%);
+
+            opacity: 0.8;
+
+            transition: filter 0.5s ease, opacity 0.5s ease;
+
             cursor: pointer;
-            position: relative;
-            background: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный фон для читаемости */
-            backdrop-filter: blur(2px); /* Легкое размытие камня */
+
         }
 
-        /* Акцент темного дерева при наведении */
-        .collection:hover {
-            border-color: #4A3728;
-            background: rgba(74, 55, 40, 0.1);
+
+
+        .main-logo:hover {
+
+            filter: grayscale(0%);
+
+            opacity: 1;
+
         }
+
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 600px;
+
+            padding: 20px;
+
+            flex-grow: 1;
+
+        }
+
+
+
+        .collection {
+
+            border-bottom: 1px solid #1a1a1a;
+
+            padding: 40px 10px;
+
+            transition: all 0.4s ease;
+
+        }
+
+
+
+        .collection:hover {
+
+            border-bottom-color: #333;
+
+        }
+
+
 
         .collection h2 {
-            font-size: 1.6rem;
+
+            font-size: 1.4rem;
+
+            letter-spacing: 0.5rem;
+
             margin: 0;
-            letter-spacing: 0.4rem;
+
+            font-weight: 300;
+
             text-transform: uppercase;
-            font-weight: 400;
-            color: #fff;
+
+            cursor: pointer;
+
         }
 
-        .collection p {
-            font-size: 0.8rem;
-            color: #555;
-            margin: 10px 0 0;
+
+
+        .collection p.see-btn {
+
+            font-size: 0.7rem;
+
+            color: #333;
+
+            margin-top: 10px;
+
             text-transform: lowercase;
+
             font-style: italic;
+
+            cursor: pointer;
+
         }
 
-        /* Выпадающий список моделей */
+
+
         .models {
+
             max-height: 0;
+
             overflow: hidden;
+
             transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 0;
+
         }
+
+
 
         .models.active {
+
             max-height: 500px;
+
             margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #333;
+
         }
+
+
 
         .model-list {
+
             list-style: none;
+
             padding: 0;
+
             margin: 0;
+
         }
+
+
 
         .model-list li {
-            padding: 10px 0;
-            font-size: 1.2rem;
-            color: #999;
+
+            padding: 12px 0;
+
+            font-size: 1.1rem;
+
+            color: #888;
+
             letter-spacing: 0.1rem;
-            text-transform: capitalize;
+
+            display: flex;
+
+            align-items: center;
+
+            cursor: pointer;
+
             transition: color 0.3s;
+
         }
+
+
 
         .model-list li:hover {
-            color: #E5E5E5;
+
+            color: #fff;
+
         }
+
+
 
         .model-list li::before {
+
             content: "";
-            display: inline-block;
-            width: 8px;
+
+            width: 10px;
+
             height: 1px;
-            background: #4A3728;
+
+            background: #333;
+
             margin-right: 15px;
-            vertical-align: middle;
+
         }
+
+
+
+        /* --- МОДАЛЬНОЕ ОКНО --- */
+
+        .modal {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background: rgba(5, 5, 5, 0.95);
+
+            display: none;
+
+            justify-content: center;
+
+            align-items: center;
+
+            z-index: 1000;
+
+            padding: 20px;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .modal-content {
+
+            max-width: 450px;
+
+            width: 90%;
+
+            text-align: center;
+
+            cursor: default;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+        }
+
+
+
+        .modal-content img {
+
+            max-width: 100%;
+
+            max-height: 60vh;
+
+            width: auto;
+
+            object-fit: contain;
+
+            filter: grayscale(100%);
+
+            margin-bottom: 20px;
+
+            border: 1px solid #1a1a1a;
+
+            transition: filter 0.8s ease;
+
+        }
+
+
+
+        .modal-content img:hover {
+
+            filter: grayscale(0%);
+
+        }
+
+
+
+        .modal-content h3 {
+
+            font-weight: 300;
+
+            letter-spacing: 0.3rem;
+
+            text-transform: uppercase;
+
+            margin: 15px 0 10px 0;
+
+            color: #fff;
+
+        }
+
+
+
+        .modal-content p {
+
+            font-size: 0.85rem;
+
+            line-height: 1.6;
+
+            color: #999;
+
+            letter-spacing: 0.05rem;
+
+            max-width: 300px;
+
+            margin: 0 auto;
+
+        }
+
+
+
+        .close-modal {
+
+            position: absolute;
+
+            top: 30px;
+
+            right: 30px;
+
+            color: #444;
+
+            font-size: 0.8rem;
+
+            cursor: pointer;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.2rem;
+
+            border: 1px solid #222;
+
+            padding: 5px 10px;
+
+        }
+
+
 
         footer {
+
             padding: 60px 20px;
-            font-size: 0.7rem;
-            color: #444;
-            letter-spacing: 0.2rem;
+
+            font-size: 0.6rem;
+
+            color: #222;
+
+            letter-spacing: 0.3rem;
+
             text-align: center;
-            text-transform: uppercase;
-            background: rgba(0, 0, 0, 0.6);
-            width: 100%;
-            box-sizing: border-box;
+
         }
 
-        /* Адаптивность для мобильных */
-        @media (max-width: 600px) {
-            .logo-scratched { width: 180px; height: 180px; }
-            .collection { padding: 30px 20px; }
-        }
     </style>
+
 </head>
+
 <body>
 
+
+
     <header>
-        <!-- Вместо h1 text, используем div с фоном-логотипом -->
-        <div class="logo-scratched">ARRIT</div>
-        <div class="tagline">Silver. Fire. Soot.</div>
+
+        <h1>ARRIT</h1>
+
+        <div class="tagline">Spirit in metal</div>
+
+        <div class="logo-container">
+
+            <img src="https://i.ibb.co/gpCVxvW/1777555524327.png" alt="ARRIT Logo" class="main-logo">
+
+        </div>
+
     </header>
 
+
+
     <div class="container">
+
         
-        <!-- PRIMUS -->
-        <div class="collection" onclick="toggle('primus')">
-            <h2>PRIMUS</h2>
-            <p>нажми, чтобы открыть артефакты</p>
+
+        <div class="collection">
+
+            <h2 onclick="toggle('primus')">PRIMUS</h2>
+
+            <p class="see-btn" onclick="toggle('primus')">see</p>
+
             <div id="primus" class="models">
+
                 <ul class="model-list">
-                    <li>Axus</li>
-                    <li>Lepus</li>
-                    <li>Homus</li>
-                    <li>Noctis</li>
-                    <li>Corvus</li>
+
+                    <li onclick="showModel('Axus', 'The first breath of cold metal.', 'https://i.ibb.co/nM21n6FQ/1775224054643.png')">Axus</li>
+
+                    <li onclick="showModel('Lepus', 'Graceful motion in stillness.', 'https://i.ibb.co/0pcg9xQw/1775222619863.png')">Lepus</li>
+
+                    <li onclick="showModel('Homus', 'Human form, rewritten.', 'https://i.ibb.co/RpTmZsgy/1775220862624.png')">Homus</li>
+
+                    <li onclick="showModel('Noctis', 'Born from the shadows of Tbilisi.', 'https://i.ibb.co/Fkm2csfT/1775222134504.png')">Noctis</li>
+
+                    <li onclick="showModel('Corvus', 'The guardian of the void.', 'https://i.ibb.co/cnCCDm0/1775218956806.png')">Corvus</li>
+
                 </ul>
+
             </div>
+
         </div>
 
-        <!-- UDU -->
-        <div class="collection" onclick="toggle('udu')">
-            <h2>UDU</h2>
-            <p>нажми, чтобы открыть артефакты</p>
+
+
+        <div class="collection">
+
+            <h2 onclick="toggle('udu')">UDU</h2>
+
+            <p class="see-btn" onclick="toggle('udu')">see</p>
+
             <div id="udu" class="models">
+
                 <ul class="model-list">
-                    <li>Nammu</li>
-                    <li>Ullikummi</li>
-                    <li>Gigelmkhul</li>
+
+                    <li onclick="showModel('Nammu', 'Ancient echoes in modern structure.', 'https://i.ibb.co/XrJ8rpqf/1777368987822.png')">Nammu</li>
+
+                    <li onclick="showModel('Ullikummi', 'Strength forged in deep earth.', 'https://i.ibb.co/tykmN1s/1777369127535.png')">Ullikummi</li>
+
+                    <li onclick="showModel('Gigelmkhul', 'The architect of forgotten dreams.', 'https://i.ibb.co/Y76K586Y/1777368917993.png')">Gigelmkhul</li>
+
                 </ul>
+
             </div>
+
         </div>
 
-        <!-- NOVA -->
-        <div class="collection" onclick="toggle('nova')">
-            <h2>NOVA</h2>
-            <p>в разработке</p>
+
+
+        <div class="collection">
+
+            <h2 onclick="toggle('nova')">NOVA</h2>
+
+            <p class="see-btn" onclick="toggle('nova')">soon</p>
+
             <div id="nova" class="models">
+
                 <ul class="model-list">
-                    <li>Artifact I</li>
-                    <li>Artifact II</li>
-                    <li>Artifact III</li>
+
+                    <li onclick="showModel('Artifact I', 'Coming soon...', 'https://via.placeholder.com/400x500/111/fff?text=NOVA+I')">Artifact I</li>
+
+                    <li onclick="showModel('Artifact II', 'Coming soon...', 'https://via.placeholder.com/400x500/111/fff?text=NOVA+II')">Artifact II</li>
+
+                    <li onclick="showModel('Artifact III', 'Coming soon...', 'https://via.placeholder.com/400x500/111/fff?text=NOVA+III')">Artifact III</li>
+
                 </ul>
+
             </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <div id="modelModal" class="modal" onclick="closeModel()">
+
+        <span class="close-modal">close</span>
+
+        <div class="modal-content" onclick="event.stopPropagation()">
+
+            <img id="modalImg" src="" alt="">
+
+            <h3 id="modalTitle"></h3>
+
+            <p id="modalDesc"></p>
+
         </div>
 
     </div>
 
+
+
     <footer>
-        &copy; 2026 ARRIT ARTIFACTS / TBILISI / HANDMADE
+
+        TBILISI / 2026
+
     </footer>
 
+
+
     <script>
+
         function toggle(id) {
+
             const el = document.getElementById(id);
-            const allModels = document.querySelectorAll('.models');
-            
-            // Закрываем другие, если нужно
-            // allModels.forEach(m => { if(m.id !== id) m.classList.remove('active'); });
 
             el.classList.toggle('active');
+
         }
+
+
+
+        function showModel(name, desc, imgSrc) {
+
+            document.getElementById('modalTitle').innerText = name;
+
+            document.getElementById('modalDesc').innerText = desc;
+
+            document.getElementById('modalImg').src = imgSrc;
+
+            document.getElementById('modelModal').style.display = 'flex';
+
+            document.body.style.overflow = 'hidden'; 
+
+        }
+
+
+
+        function closeModel() {
+
+            document.getElementById('modelModal').style.display = 'none';
+
+            document.body.style.overflow = 'auto';
+
+        }
+
+
+
+        document.addEventListener('keydown', (e) => {
+
+            if (e.key === "Escape") closeModel();
+
+        });
+
     </script>
+
+
+
 </body>
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CSS
+
+
+
+
+
+
+
+body {
+
+
+
+  margin: 0;
